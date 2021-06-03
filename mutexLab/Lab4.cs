@@ -1,22 +1,39 @@
-﻿using System;
+using System;
 using System.Threading;
 
-namespace mutexLab
+class Program
 {
-    public class Lab4
+    static Mutex _mutex;
+
+    static bool IsSingleInstance()
     {
-        static void Main(string[] args)
+        try
         {
-            bool createdNew;
-
-            Mutex m = new Mutex(true, "myApp", out createdNew);
-
-            if (!createdNew)
-            {
-                // myApp is already running...
-                Console.WriteLine("myApp is already running!", "Multiple Instances");
-                return;
-            }
+            Mutex.OpenExisting("mut");
         }
+        catch
+        {
+            _mutex = new Mutex(true, "mut");
+            return true;
+        }
+
+        return false;
+    }
+
+    static void Main()
+    {
+        if (!IsSingleInstance())
+        {
+            Console.WriteLine("More than one instance");
+        }
+        else
+        {
+            Console.WriteLine("One instance");
+        }
+        Console.Write("\nPress 'Enter' to end the process...");
+        while (Console.ReadKey().Key != ConsoleKey.Enter)
+        {
+        }
+
     }
 }
