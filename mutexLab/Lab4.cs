@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace mutexLab
 {
-    class Lab4
+    public class Lab4
     {
         static void Main(string[] args)
         {
